@@ -7,10 +7,16 @@
     <h2>投稿</h2>
 </div>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="formpost">
         {% render_field form.title class="form_control" placeholder="タイトルを入力" %}
+    </div>
+    <div class="formpost">
+        {% render_field form.category class="form_control" placeholder="カテゴリを入力" %}
+    </div>
+    <div class="formpost">
+        {{ form.image }}
     </div>
     <div class="formpost">
         {% render_field form.content class="form-control" placeholder="本文を入力" %}
