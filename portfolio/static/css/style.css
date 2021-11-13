@@ -129,3 +129,8 @@ a:hover {
     height: 100%;
     object-fit: contain;
 }
+
+order img {
+    height: 100px;
+    object-fit: contain;
+}

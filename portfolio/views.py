@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, query
 from functools import reduce
 from operator import and_
+from app.models import Item
 
 class IndexView(View):
     def get(self, request, *args, **kwargs):
