@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from allauth.account import views
+from django.urls.base import is_valid_path
 from django.views import View
+from django.contrib.auth.models import User
+from accounts.forms import ProfileForm
 
 class LoginView(views.LoginView):
     template_name = 'accounts/login.html'
@@ -18,4 +21,35 @@ class SignupView(views.SignupView):
 
 class ProfileView(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'app/profile.html')
+        user_data = User.objects.get(id=request.user.id)
+
+        return render(request, 'accounts/profile.html', {
+            'user_data': user_data,
+        })
+
+class ProfileEditView(View):
+    def get(self, request, *args, **kwargs):
+        user_data = User.objects.get(id=request.user.id)
+        form = ProfileForm(
+            request.POST or None,
+            initial = {
+                'last_name': user_data.last_name,
+                'first_name': user_data.first_name,
+            }
+        )
+
+        return render(request, 'accounts/profile_edit.html', {
+            'form': form
+        })
+
+    def post(self, request, *args, **kwargs):
+        form = ProfileForm(request.POST or None)
+        if form.is_valid():
+            user_data = User.objects.get(id=request.user.id)
+            user_data.last_name = form.cleaned_data['last_name']
+            user_data.first_name = form.cleaned_data['first_name']
+            user_data.save()
+            return redirect('account_profile')
+        return render(request, 'accounts/profile.html', {
+            'form': form
+        })
