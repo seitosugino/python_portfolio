@@ -9,5 +9,7 @@ urlpatterns = [
     path('order/', views.OrderView.as_view(), name='order'),
     path('removeitem/<slug>', views.removeItem, name='removeitem'),
     path('removesingleitem/<slug>', views.removeSingleItem, name='removesingleitem'),
+    path('payment/', views.PaymentView.as_view(), name='payment'),
+    path('thanks/', views.ThanksView.as_view(), name='thanks'),
     path('accounts/', include('accounts.urls')),
 ]

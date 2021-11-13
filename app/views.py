@@ -1,11 +1,12 @@
 from django.http import request
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
-from .models import Item, OrderItem, Order
+from .models import Item, OrderItem, Order, Payment
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 
 class IndexView(View):
     def get(self, request, *args, **kwargs):
@@ -99,3 +100,36 @@ def removeSingleItem(request, slug):
                 order_item.delete()
             return redirect('order')
         return redirect('app_product', slug=slug)
+
+class PaymentView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        order = Order.objects.get(user=request.user, ordered=False)
+        user_data = User.objects.get(id=request.user.id)
+        context = {
+            'order': order,
+            'user_data': user_data
+        }
+        return render(request, 'app/payment.html', context)
+
+    def post(self, request, *args, **kwargs):
+        order = Order.objects.get(user=request.user, ordered=False)
+        order_items = order.items.all()
+        amount = order.get_total()
+
+        payment = Payment(user=request.user)
+        payment.stripe_charge_id = 'test_stripe_charge_id'
+        payment.amount = amount
+        payment.save()
+
+        order_items.update(ordered=True)
+        for item in order_items:
+            item.save()
+
+        order.ordered = True
+        order.payment = payment
+        order.save()
+        return redirect('thanks')
+
+class ThanksView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'app/thanks.html')
