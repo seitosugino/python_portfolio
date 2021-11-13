@@ -1,8 +1,8 @@
 from django.http import request
 from django.shortcuts import render, redirect
 from django.views.generic import View
-from .models import Post, Category
-from .forms import PostForm
+from .models import Post, Category, Address
+from .forms import PostForm, AddressForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, query
 from functools import reduce
@@ -122,3 +122,59 @@ class SearchView(View):
             'keyword': keyword,
             'post_data': post_data
         })
+
+class AddressEditView(View):
+    def get(self, request, *args, **kwargs):
+        if Address.objects.filter(author=request.user) is None:
+                form = AddressForm(request.POST or None)
+                return render(request, 'portfolio/address.html', {
+                    'form': form
+                })
+        else:
+            address_data = Address.objects.get(author=request.user)
+            form = AddressForm(
+                request.POST or None,
+                initial = {
+                    'name': address_data.name,
+                    'postal': address_data.postal,
+                    'address': address_data.address,
+                    'phone': address_data.phone,
+                }
+            )
+            return render(request, 'portfolio/address.html', {
+                'form': form
+            })
+
+    def post(self, request, *args, **kwargs):
+        if Address.objects.filter(author=request.user).count is None:
+            form = AddressForm(request.POST or None)
+            address_data = Address.objects.filter(author=request.user)
+            if form.is_valid():
+                address_data = Address()
+                address_data.author = request.user
+                address_data.name = form.cleaned_data['name']
+                address_data.postal = form.cleaned_data['postal']
+                address_data.address = form.cleaned_data['address']
+                address_data.phone = form.cleaned_data['phone']
+                address_data.save()
+                return redirect('address')
+
+            return render(request, 'portfolio/address.html', {
+                'form': form
+            })
+        else:
+            form = AddressForm(request.POST or None)
+            address_data = Address.objects.get(author=request.user)
+            if form.is_valid():
+                address_data = Address.objects.get(author=request.user)
+                address_data.author = request.user
+                address_data.name = form.cleaned_data['name']
+                address_data.postal = form.cleaned_data['postal']
+                address_data.address = form.cleaned_data['address']
+                address_data.phone = form.cleaned_data['phone']
+                address_data.save()
+                return redirect('address')
+
+            return render(request, 'portfolio/address.html', {
+                'form': form
+            })

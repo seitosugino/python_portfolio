@@ -32,6 +32,10 @@ class Order(models.Model):
     ordered_data = models.DateTimeField()
     ordered = models.BooleanField(default=False)
     payment = models.ForeignKey('Payment', on_delete=models.SET_NULL, blank=True, null=True)
+    name =  models.CharField(max_length=100)
+    postal = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
 
 
     def get_total(self):

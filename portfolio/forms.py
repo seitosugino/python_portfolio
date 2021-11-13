@@ -10,3 +10,9 @@ class PostForm(forms.Form):
     category = forms.ChoiceField(label='カテゴリ', widget=forms.Select, choices=list(category_choice.items()))
     content = forms.CharField(label='内容', widget=forms.Textarea())
     image = forms.ImageField(label='イメージ画像', required=False)
+
+class AddressForm(forms.Form):
+    name = forms.CharField(max_length=30)
+    postal = forms.CharField(max_length=8)
+    address = forms.CharField(max_length=100)
+    phone = forms.CharField(max_length=13)

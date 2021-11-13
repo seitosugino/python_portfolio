@@ -18,3 +18,10 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+class Address(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    name = models.CharField("宛名", max_length=30)
+    postal = models.CharField("名前",max_length=30)
+    address = models.CharField("住所", max_length=100)
+    phone = models.CharField("電話番号", max_length=13)

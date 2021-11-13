@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from portfolio.models import Address
 
 class IndexView(View):
     def get(self, request, *args, **kwargs):
@@ -105,9 +106,11 @@ class PaymentView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         order = Order.objects.get(user=request.user, ordered=False)
         user_data = User.objects.get(id=request.user.id)
+        address_data = Address.objects.get(author=request.user)
         context = {
             'order': order,
-            'user_data': user_data
+            'user_data': user_data,
+            'address_data': address_data,
         }
         return render(request, 'app/payment.html', context)
 
@@ -124,11 +127,16 @@ class PaymentView(LoginRequiredMixin, View):
         order_items.update(ordered=True)
         for item in order_items:
             item.save()
-
+        address_data = Address.objects.get(author=request.user)
         order.ordered = True
         order.payment = payment
+        order.name = address_data.name
+        order.postal = address_data.postal
+        order.address = address_data.address
+        order.phone = address_data.phone
         order.save()
         return redirect('thanks')
+
 
 class ThanksView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):

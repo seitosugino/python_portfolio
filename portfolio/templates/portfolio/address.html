@@ -1,0 +1,28 @@
+{% extends "portfolio/base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="card card-profile my-5 mx-auto">
+    <div class="card-body">
+        <h5 class="card-title text-center">住所登録</h5>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-post">
+                {% render_field form.name class="form-control" placeholder="宛名を入力" %}
+            </div>
+            <div class="form-post">
+                {% render_field form.postal class="form-control" placeholder="郵便番号を入力" %}
+            </div>
+            <div class="form-post">
+                {% render_field form.address class="form-control" placeholder="住所を入力" %}
+            </div>
+            <div class="form-post">
+                {% render_field form.phone class="form-control" placeholder="電話番号を入力" %}
+            </div>
+            <div class="button mx-auto">
+                <button class="btn btn-lg btn-warning btn-block" type="submit">登録する</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

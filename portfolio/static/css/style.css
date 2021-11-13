@@ -15,7 +15,7 @@ main {
     flex: 1;
 }
 
-.formpost {
+.form-post {
     margin-bottom: 1rem;
 }
 
@@ -130,7 +130,7 @@ a:hover {
     object-fit: contain;
 }
 
-order img {
+.order img {
     height: 100px;
     object-fit: contain;
 }

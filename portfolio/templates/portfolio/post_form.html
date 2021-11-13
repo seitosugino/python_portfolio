@@ -9,16 +9,16 @@
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <div class="formpost">
-        {% render_field form.title class="form_control" placeholder="タイトルを入力" %}
+    <div class="form-post">
+        {% render_field form.title class="form-control" placeholder="タイトルを入力" %}
     </div>
-    <div class="formpost">
-        {% render_field form.category class="form_control" placeholder="カテゴリを入力" %}
+    <div class="form-post">
+        {% render_field form.category class="form-control" placeholder="カテゴリを入力" %}
     </div>
-    <div class="formpost">
+    <div class="form-post">
         {{ form.image }}
     </div>
-    <div class="formpost">
+    <div class="form-post">
         {% render_field form.content class="form-control" placeholder="本文を入力" %}
     </div>
     <button class="btn btn-warning" type="submit">投稿する</button>
