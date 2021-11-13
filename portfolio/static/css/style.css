@@ -119,3 +119,13 @@ a:hover {
 .form-control:focus {
     box-shadow: none;
 }
+
+.item-list {
+    height: 100%;
+    object-fit: contain;
+}
+
+.product img {
+    height: 100%;
+    object-fit: contain;
+}
