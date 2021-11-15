@@ -9,11 +9,17 @@ body {
     display: flex;
     flex-flow: column;
     min-height: 100vh;
+    background-image: url("/static/img/main1.jpeg");
+    background-size: cover;
 }
 
 main {
     flex: 1;
 }
+
+.navbar-title {
+    background-image: url("/static/img/head.jpg");
+  }
 
 .form-post {
     margin-bottom: 1rem;
