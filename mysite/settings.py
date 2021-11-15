@@ -166,4 +166,5 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-ALLOWED_HOSTS = ["gasyeopi.herokuapp.com"]
+from socket import gethostname
+hostname = gethostname()
