@@ -10,6 +10,7 @@ django = "*"
 django-heroku = "*"
 django-widgets-improved = "*"
 django-bootstrap4 = "*"
+django-allauth = "*"
 
 [dev-packages]
 
