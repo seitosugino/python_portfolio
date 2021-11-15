@@ -11,6 +11,8 @@ django-heroku = "*"
 django-widgets-improved = "*"
 django-bootstrap4 = "*"
 django-allauth = "*"
+dj-static-revision = "*"
+dj-static = "*"
 
 [dev-packages]
 
