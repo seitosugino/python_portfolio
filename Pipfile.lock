@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "c75d5c1b1d6b4eb8c19b369308b41c52be3df9230981ff19b102358accf96697"
+            "sha256": "25f583b745fe833ee2c75e2525f8834550106020c56a9b27dd44a14320b170b9"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -24,6 +24,14 @@
             "markers": "python_version >= '3.6'",
             "version": "==3.4.1"
         },
+        "beautifulsoup4": {
+            "hashes": [
+                "sha256:9a315ce70049920ea4572a4055bc4bd700c940521d36fc858205ad4fcde149bf",
+                "sha256:c23ad23c521d818955a4151a67d81580319d4bf548d3d49f4223ae041ff98891"
+            ],
+            "markers": "python_version >= '3.1'",
+            "version": "==4.10.0"
+        },
         "dj-database-url": {
             "hashes": [
                 "sha256:4aeaeb1f573c74835b0686a2b46b85990571159ffc21aa57ecd4d1e1cb334163",
@@ -39,6 +47,14 @@
             ],
             "index": "pypi",
             "version": "==3.2.9"
+        },
+        "django-bootstrap4": {
+            "hashes": [
+                "sha256:662d5d552bd947dbd09df7f76a5caaa2daef4e0e82b14e8ce08c8b75786abc52",
+                "sha256:e6bfe54038ce77d8b7b8ebf00b5b054f197519caa3d8e3a9ea2d63842407fa59"
+            ],
+            "index": "pypi",
+            "version": "==21.1"
         },
         "django-heroku": {
             "hashes": [
@@ -95,6 +111,14 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==59.0.1"
+        },
+        "soupsieve": {
+            "hashes": [
+                "sha256:1a3cca2617c6b38c0343ed661b1fa5de5637f257d4fe22bd9f1338010a1efefb",
+                "sha256:b8d49b1cd4f037c7082a9683dfa1801aa2597fb11c3a1155b7a5b94829b4f1f9"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==2.3.1"
         },
         "sqlparse": {
             "hashes": [

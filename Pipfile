@@ -9,6 +9,7 @@ gunicorn = "*"
 django = "*"
 django-heroku = "*"
 django-widgets-improved = "*"
+django-bootstrap4 = "*"
 
 [dev-packages]
 
