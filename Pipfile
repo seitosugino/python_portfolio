@@ -13,6 +13,7 @@ django-bootstrap4 = "*"
 django-allauth = "*"
 dj-static-revision = "*"
 dj-static = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
