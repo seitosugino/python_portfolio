@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(=!aa+1*h*988#5za78w!ad)7ol+4plztppi7&myo)^w-ph18@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -151,14 +151,8 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-ALLOWED_HOSTS = ["gasyeopi.herokuapp.com"]
-
-DEBUG = False
-
-DEBUG = False
-
 try:
-    from config.local_settings import *
+    from mysite.local_settings import *
 except ImportError:
     pass
 
