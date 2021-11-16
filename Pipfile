@@ -14,6 +14,7 @@ django-allauth = "*"
 dj-static-revision = "*"
 dj-static = "*"
 psycopg2 = "*"
+pillow = "*"
 
 [dev-packages]
 
