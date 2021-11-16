@@ -131,7 +131,7 @@ class AddressEditView(View):
                     'form': form
                 })
         else:
-            address_data = Address.objects.get(author=request.user)
+            address_data = Address.objects.get(author=request.user).currency
             form = AddressForm(
                 request.POST or None,
                 initial = {
@@ -148,7 +148,7 @@ class AddressEditView(View):
     def post(self, request, *args, **kwargs):
         if Address.objects.filter(author=request.user).count is None:
             form = AddressForm(request.POST or None)
-            address_data = Address.objects.filter(author=request.user).currency
+            address_data = Address.objects.filter(author=request.user)
             if form.is_valid():
                 address_data = Address()
                 address_data.author = request.user
