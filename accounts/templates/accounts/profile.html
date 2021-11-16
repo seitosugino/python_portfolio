@@ -26,7 +26,11 @@
             </tbody>
         </table>
         <div class="button mx-auto">
-            <a href="{% url 'address' %}" class="btn btn-lg btn-warning btn-block">編集する</a>
+            {% if address_data.count == 0 %}
+                <a href="{% url 'address_create' %}" class="btn btn-lg btn-warning btn-block">新規登録</a>
+            {% else %}
+                <a href="{% url 'address' %}" class="btn btn-lg btn-warning btn-block">編集する</a>
+            {% endif %}
         </div>
     </div>
 </div>

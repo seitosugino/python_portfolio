@@ -4,6 +4,7 @@ from django.urls.base import is_valid_path
 from django.views import View
 from django.contrib.auth.models import User
 from accounts.forms import ProfileForm
+from portfolio.models import Address
 
 class LoginView(views.LoginView):
     template_name = 'accounts/login.html'
@@ -22,9 +23,11 @@ class SignupView(views.SignupView):
 class ProfileView(View):
     def get(self, request, *args, **kwargs):
         user_data = User.objects.get(id=request.user.id)
+        address_data = Address.objects.filter(author=request.user)
 
         return render(request, 'accounts/profile.html', {
             'user_data': user_data,
+            'address_data': address_data,
         })
 
 class ProfileEditView(View):

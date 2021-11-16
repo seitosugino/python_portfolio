@@ -123,27 +123,28 @@ class SearchView(View):
             'post_data': post_data
         })
 
+class AddressCreateView(View):
+    def get(self, request, *args, **kwargs):
+        form = AddressForm(request.POST or None)
+        return render(request, 'portfolio/address.html', {
+            'form': form
+        })
+
 class AddressEditView(View):
     def get(self, request, *args, **kwargs):
-        if Address.objects.all().filter(author=request.user) is None:
-            form = AddressForm(request.POST or None)
-            return render(request, 'portfolio/address.html', {
-                'form': form
-            })
-        else:
-            address_data = Address.objects.get(author=request.user)
-            form = AddressForm(
-                request.POST or None,
-                initial = {
-                    'name': address_data.name,
-                    'postal': address_data.postal,
-                    'address': address_data.address,
-                    'phone': address_data.phone,
-                }
-            )
-            return render(request, 'portfolio/address.html', {
-                'form': form
-            })
+        address_data = Address.objects.get(author=request.user)
+        form = AddressForm(
+            request.POST or None,
+            initial = {
+                'name': address_data.name,
+                'postal': address_data.postal,
+                'address': address_data.address,
+                'phone': address_data.phone,
+            }
+        )
+        return render(request, 'portfolio/address.html', {
+            'form': form
+        })
 
     def post(self, request, *args, **kwargs):
         if Address.objects.filter(author=request.user).count is None:
