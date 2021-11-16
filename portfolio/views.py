@@ -126,12 +126,12 @@ class SearchView(View):
 class AddressEditView(View):
     def get(self, request, *args, **kwargs):
         if Address.objects.filter(author=request.user) is None:
-                form = AddressForm(request.POST or None)
-                return render(request, 'portfolio/address.html', {
-                    'form': form
-                })
+            form = AddressForm(request.POST or None)
+            return render(request, 'portfolio/address.html', {
+                'form': form
+            })
         else:
-            address_data = Address.objects.get(author=request.user).currency
+            address_data = Address.objects.get(author=request.user)
             form = AddressForm(
                 request.POST or None,
                 initial = {
