@@ -147,3 +147,47 @@ a:hover {
     height: 100px;
     object-fit: contain;
 }
+
+.top img {
+    object-fit: cover;
+    height: 500px;
+}
+
+.overlay {
+    position: absolute;
+}
+
+.title {
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.thumbnail {
+    overflow: hidden;
+    position: relative;
+}
+
+.top2-img {
+    object-fit: cover;
+    height: 180px;
+}
+
+.top2-title {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    opacity: 0;
+    background-color: darksalmon;
+    transform: translateY(70px);
+    transition: all 0.2s ease-in-out;
+}
+
+.thumbnail:hover .top2-title {
+    transform: translateY(0px);
+    opacity: 1;
+}
