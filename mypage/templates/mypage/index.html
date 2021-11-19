@@ -22,21 +22,38 @@
     </div>
 
     <div class="col-6 col-md-3 mb-3">
-      <div class="card thumbnail">
-          <img src="/static/img/top2.jpg" alt="" class="top2-img">
-          <div class="overlay p-5">
-              <p class="title mb-0">
-                  ECサイト
-              </p>
-          </div>
-          <div class="text-center top2-title">
-              <p class="mb-0">
-                  ページへ移動
-              </p>
-              <a href="{% url 'app_index' %}" class="stretched-link"></a>
-          </div>
-      </div>
-  </div>
+        <div class="card thumbnail">
+            <img src="/static/img/top2.jpg" alt="" class="top2-img">
+            <div class="overlay p-5">
+                <p class="title mb-0">
+                    ECサイト
+                </p>
+            </div>
+            <div class="text-center top2-title">
+                <p class="mb-0">
+                    ページへ移動
+                </p>
+                <a href="{% url 'app_index' %}" class="stretched-link"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-md-3 mb-3">
+        <div class="card thumbnail">
+            <img src="/static/img/top2.jpg" alt="" class="top2-img">
+            <div class="overlay p-5">
+                <p class="title mb-0">
+                    予約サイト
+                </p>
+            </div>
+            <div class="text-center top2-title">
+                <p class="mb-0">
+                    ページへ移動
+                </p>
+                <a href="{% url 'reserve_index' %}" class="stretched-link"></a>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

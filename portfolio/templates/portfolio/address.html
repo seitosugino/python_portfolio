@@ -5,8 +5,14 @@
 <div class="card card-profile my-5 mx-auto">
     <div class="card-body">
         <h5 class="card-title text-center">住所登録</h5>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            <div class="form-post">
+                {{ form.image }}
+            </div>
+            <div class="form-post">
+                {% render_field form.description class="form-control" placeholder="自己紹介" %}
+            </div>
             <div class="form-post">
                 {% render_field form.name class="form-control" placeholder="宛名を入力" %}
             </div>

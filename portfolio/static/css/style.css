@@ -191,3 +191,18 @@ a:hover {
     transform: translateY(0px);
     opacity: 1;
 }
+
+.store-list img {
+    height: 150px;
+    object-fit: contain;
+}
+
+.staff-list img {
+    height: 250px;
+    object-fit: contain;
+}
+
+.calendar img {
+    height: 150px;
+    object-fit: contain;
+}

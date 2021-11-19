@@ -1,0 +1,27 @@
+{% extends "portfolio/base.html" %}
+
+{% block content %}
+
+<div class="text-center my-5">
+    <div class="mb-5">
+        <h1>店舗一覧</h1>
+    </div>
+    <div class="row">
+        {% for store in store_data %}
+            <div class="col-lg-3 col-md-6">
+                <div class="card img-thumbnail store-list mb-3">
+                    <img src="{{ store.image.url }}" alt="" class="card-img-top card-thumbnail">
+                    <div class="card-body text-center px-2 py-3">
+                        <h5 class="font-weight-bold">{{ store.name }}</h5>
+                        <p>{{ store.address }}</p>
+                    </div>
+                    <a href="{% url 'staff' store.pk %}" class="stretched-link"></a>
+                </div>
+            </div>
+        {% empty %}
+            <p>まだ店舗がありません</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

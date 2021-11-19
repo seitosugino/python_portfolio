@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models.fields.files import ImageField
 from .models import Category
 
 class PostForm(forms.Form):
@@ -16,3 +17,5 @@ class AddressForm(forms.Form):
     postal = forms.CharField(max_length=8)
     address = forms.CharField(max_length=100)
     phone = forms.CharField(max_length=13)
+    description = forms.CharField(label='自己紹介', widget=forms.Textarea(), required=False)
+    image = forms.ImageField(required=False, )

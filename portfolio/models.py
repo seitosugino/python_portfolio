@@ -25,3 +25,5 @@ class Address(models.Model):
     postal = models.CharField("名前",max_length=30)
     address = models.CharField("住所", max_length=100)
     phone = models.CharField("電話番号", max_length=13)
+    description = models.TextField("自己紹介", default="", null=True, blank=True)
+    image = models.ImageField(upload_to="images", verbose_name="プロフィール画像", null=True, blank=True)

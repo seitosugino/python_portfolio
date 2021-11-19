@@ -140,6 +140,8 @@ class AddressEditView(View):
                 'postal': address_data.postal,
                 'address': address_data.address,
                 'phone': address_data.phone,
+                'description': address_data.description,
+                'image': address_data.image
             }
         )
         return render(request, 'portfolio/address.html', {
@@ -157,6 +159,9 @@ class AddressEditView(View):
                 address_data.postal = form.cleaned_data['postal']
                 address_data.address = form.cleaned_data['address']
                 address_data.phone = form.cleaned_data['phone']
+                address_data.description = form.cleaned_data['description']
+                if request.FILES.get('image'):
+                    address_data.image = request.FILES.get('image')
                 address_data.save()
                 return redirect('address')
 
