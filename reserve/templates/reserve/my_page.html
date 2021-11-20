@@ -26,6 +26,8 @@
                             <th scope="col" class="text-primary">{{ day | date:'d(D)' }}</th>
                         {% elif day.weekday == 6 %}
                             <th scope="col" class="text-danger">{{ day | date:'d(D)' }}</th>
+                        {% else %}
+                            <th scope="col">{{ day | date:'d(D)' }}</th>
                         {% endif %}
                     {% endfor %}
                 </tr>
@@ -47,6 +49,10 @@
                                 {% else %}
                                     <p class="mb-0 font-weight-bold text-success">{{ book }}様</p>
                                 {% endif %}
+                                <form method="POST" action="{% url 'delete' datetime.year datetime.month datetime.day booking_hour %}">
+                                    {% csrf_token %}
+                                    <button class="btn btn-light" type="submit">取消</button>
+                                </form>
                             {% endif %}
                         </td>
                         {% endfor %}

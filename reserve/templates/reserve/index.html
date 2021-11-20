@@ -5,6 +5,13 @@
 <div class="text-center my-5">
     <div class="mb-5">
         <h1>店舗一覧</h1>
+        {% if request.user.is_authenticated %}
+            {% if staff_data.count == 0 %}
+            {% else %}
+                <hr>
+                <a href="{% url 'connect' %}" class="btn btn-primary">スタッフページはこちら</a>
+            {% endif %}
+        {% endif %}
     </div>
     <div class="row">
         {% for store in store_data %}
@@ -22,6 +29,7 @@
             <p>まだ店舗がありません</p>
         {% endfor %}
     </div>
+    <a href="{% url 'reserve_index' %}" class="btn btn-primary">ホームに戻る</a>
 </div>
 
 {% endblock %}

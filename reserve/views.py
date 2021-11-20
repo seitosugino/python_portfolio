@@ -12,18 +12,24 @@ from django.views.decorators.http import require_POST
 
 class IndexView(View):
     def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-          start_date = date.today()
-          weekday = start_date.weekday()
-          if weekday != 6:
-              start_date = start_date - timedelta(days=weekday + 1)
-          return redirect('reserve_my_page', start_date.year, start_date.month, start_date.day)
-
         store_data = Store.objects.all()
-
+        if request.user.is_authenticated:
+          staff_data = Staff.objects.filter(user=request.user)
+          return render(request, 'reserve/index.html', {
+              'store_data': store_data,
+              'staff_data': staff_data
+          })
         return render(request, 'reserve/index.html', {
-            'store_data': store_data
+            'store_data': store_data,
         })
+
+class ConnectView(View):
+    def get(self, request, *args, **kwargs):
+        start_date = date.today()
+        weekday = start_date.weekday()
+        if weekday != 6:
+            start_date = start_date - timedelta(days=weekday + 1)
+        return redirect('reserve_my_page', start_date.year, start_date.month, start_date.day)
 
 class StaffView(View):
     def get(self, request, *args, **kwargs):
@@ -63,10 +69,10 @@ class CalendarView(View):
         booking_data = Booking.objects.filter(staff=staff_data).exclude(Q(start__gt=end_time) | Q(end__lt=start_time))
         for booking in booking_data:
             local_time = localtime(booking.start)
-            booking_data = local_time.date()
+            booking_date = local_time.date()
             booking_hour = local_time.hour
-            if (booking_hour in calendar) and (booking_data in calendar[booking_hour]):
-                calendar[booking_hour][booking_data] = False
+            if (booking_hour in calendar) and (booking_date in calendar[booking_hour]):
+                calendar[booking_hour][booking_date] = False
 
         return render(request, 'reserve/calendar.html', {
             'staff_data': staff_data,
@@ -112,8 +118,8 @@ class BookingView(View):
         else:
             if form.is_valid():
                 booking = Booking()
-                booking_staff = staff_data
-                booking_start = start_time
+                booking.staff = staff_data
+                booking.start = start_time
                 booking.end = end_time
                 booking.name = form.cleaned_data['name']
                 booking.tel = form.cleaned_data['tel']
@@ -156,10 +162,10 @@ class MyPageView(LoginRequiredMixin, View):
         booking_data = Booking.objects.filter(staff=staff_data).exclude(Q(start__gt=end_time) | Q(end__lt=start_time))
         for booking in booking_data:
             local_time = localtime(booking.start)
-            booking_data = local_time.date()
+            booking_date = local_time.date()
             booking_hour = local_time.hour
-            if (booking_hour in calendar) and (booking_data in calendar[booking_hour]):
-                calendar[booking_hour][booking_data] = booking.name
+            if (booking_hour in calendar) and (booking_date in calendar[booking_hour]):
+                calendar[booking_hour][booking_date] = booking.name
 
         return render(request, 'reserve/my_page.html', {
             'staff_data': staff_data,
@@ -186,6 +192,19 @@ def Holiday(request, year, month, day, hour):
         start=start_time,
         end=end_time
     )
+
+    start_date = date(year=year, month=month, day=day)
+    weekday = start_date.weekday()
+    if weekday != 6:
+        start_date = start_date - timedelta(days=weekday + 1)
+    return redirect('reserve_my_page', year=start_date.year, month=start_date.month, day=start_date.day)
+
+@require_POST
+def Delete(request, year, month, day, hour):
+    start_time = make_aware(datetime(year=year, month=month, day=day, hour=hour))
+    booking_data = Booking.objects.filter(start=start_time)
+
+    booking_data.delete()
 
     start_date = date(year=year, month=month, day=day)
     weekday = start_date.weekday()
