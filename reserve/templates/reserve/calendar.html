@@ -60,7 +60,7 @@
                                 {% if datetime <= today %}
                                     -
                                 {% elif book %}
-                                    <a href="">
+                                    <a href="{% url 'booking' staff_data.pk datetime.year datetime.month datetime.day hour %}">
                                         <i class="far fa-circle text-info"></i>
                                     </a>
                                 {% else %}
@@ -72,6 +72,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        <a href="{% url 'reserve_index' %}" class="btn btn-primary">ホームに戻る</a>
     </div>
 </div>
 
