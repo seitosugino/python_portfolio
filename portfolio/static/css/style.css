@@ -243,3 +243,30 @@ a:hover {
     height: 150px;
     object-fit: contain;
 }
+
+.book-list img {
+    height: 200px;
+    object-fit: contain;
+}
+
+.star-rating {
+    position: relative;
+    font-size: 20px;
+    word-wrap: normal!important;
+}
+
+.star-rating-front {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.star-rating-back {
+    color: #CCCCCC;
+}
+
+.average {
+    font-size: 20px;
+    font-weight: bold;
+}

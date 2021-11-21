@@ -27,6 +27,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('allauth.urls')),
     path('reserve/', include('reserve.urls')),
+    path('book/', include('book.urls')),
 ]
 
 if settings.DEBUG:

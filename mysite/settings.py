@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'app',
     'mypage',
     'reserve',
+    'book',
 ]
 
 MIDDLEWARE = [
