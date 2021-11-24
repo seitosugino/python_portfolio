@@ -9,18 +9,34 @@ from django.utils.timezone import localtime, make_aware
 from reserve.forms import BookingForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.http import require_POST
+from django.db.models import Q, query
+from functools import reduce
+from operator import and_
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 class IndexView(View):
     def get(self, request, *args, **kwargs):
         store_data = Store.objects.all()
+        paginator = Paginator(store_data, 8)
+        page = request.GET.get('page')
+        store_data = paginator.get_page(page)
+        try:
+            page_obj = paginator.page(page)
+        except PageNotAnInteger:
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            page_obj = paginator.page(paginator.num_pages)
+
         if request.user.is_authenticated:
           staff_data = Staff.objects.filter(user=request.user)
           return render(request, 'reserve/index.html', {
               'store_data': store_data,
-              'staff_data': staff_data
+              'staff_data': staff_data,
+              'page_obj': page_obj
           })
         return render(request, 'reserve/index.html', {
             'store_data': store_data,
+            'page_obj': page_obj
         })
 
 class ConnectView(View):
@@ -211,3 +227,33 @@ def Delete(request, year, month, day, hour):
     if weekday != 6:
         start_date = start_date - timedelta(days=weekday + 1)
     return redirect('reserve_my_page', year=start_date.year, month=start_date.month, day=start_date.day)
+
+class SearchView(View):
+    def get(self, request, *args, **kwargs):
+        store_data = Store.objects.all()
+        keyword = request.GET.get('keyword')
+
+        if keyword:
+            exclusion_list = set([' ',' '])
+            query_list = ''
+            for word in keyword:
+                if not word in exclusion_list:
+                    query_list += word
+            query = reduce(and_, [Q(name__icontains=q) | Q(name__icontains=q) for q in query_list])
+            store_data = store_data.filter(query)
+
+        paginator = Paginator(store_data, 8)
+        page = request.GET.get('page')
+        store_data = paginator.get_page(page)
+        try:
+            page_obj = paginator.page(page)
+        except PageNotAnInteger:
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            page_obj = paginator.page(paginator.num_pages)
+
+        return render(request, 'reserve/index.html', {
+            'keyword': keyword,
+            'store_data': store_data,
+            'page_obj': page_obj
+        })

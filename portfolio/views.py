@@ -12,7 +12,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 class IndexView(View):
     def get(self, request, *args, **kwargs):
         post_data = Post.objects.order_by('-id')
-        paginator = Paginator(post_data, 8)
+        paginator = Paginator(post_data, 4)
         page = request.GET.get('page')
         post_data = paginator.get_page(page)
         try:
@@ -129,7 +129,7 @@ class SearchView(View):
             query = reduce(and_, [Q(title__icontains=q) | Q(content__icontains=q) for q in query_list])
             post_data = post_data.filter(query)
 
-        paginator = Paginator(post_data, 8)
+        paginator = Paginator(post_data, 4)
         page = request.GET.get('page')
         post_data = paginator.get_page(page)
         try:

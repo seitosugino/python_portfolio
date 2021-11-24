@@ -1,5 +1,5 @@
 {% extends "portfolio/base.html" %}
-
+{% load app %}
 {% block content %}
 
 <div class="text-center my-5">
@@ -13,6 +13,16 @@
             {% endif %}
         {% endif %}
     </div>
+    <h5 class="card-header">検索</h5>
+    <div class="card-body">
+        <form method="get" action="{% url 'reserve_search' %}" class="inupt-group">
+            <input type="text" class="form-group form-control" name="keyword" placeholder="商品を検索">
+            <button class="btn btn-warning ml-2" type="submit">検索</button>
+        </form>
+    </div>
+    {% if keyword %}
+        <h4 class="mb-4">「{{ keyword }}の検索結果」</h4>
+    {% endif %}
     <div class="row">
         {% for store in store_data %}
             <div class="col-lg-3 col-md-6">
@@ -29,7 +39,39 @@
             <p>まだ店舗がありません</p>
         {% endfor %}
     </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 py-2">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?{%  url_replace request 'page' page_obj.previous_page_number %}">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="page-item active"><a class="page-link" href="#!">{{ num }}</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?{%  url_replace request 'page' num %}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?{%  url_replace request 'page' page_obj.next_page_number %}">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="text-center my-5">
     <a href="/" class="btn btn-primary">ホームに戻る</a>
 </div>
-
 {% endblock %}

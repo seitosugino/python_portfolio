@@ -13,4 +13,5 @@ urlpatterns = [
     path('my_page/<int:year>/<int:month>/<int:day>', views.MyPageView.as_view(), name='reserve_my_page'),
     path('my_page/holiday/<int:year>/<int:month>/<int:day>/<int:hour>/', views.Holiday, name='holiday'),
     path('my_page/holiday/<int:year>/<int:month>/<int:day>/<int:hour>/', views.Delete, name='delete'),
+    path('search', views.SearchView.as_view(), name='reserve_search'),
 ]
