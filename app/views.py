@@ -8,12 +8,28 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from portfolio.models import Address
+from django.db.models import Q, query
+from functools import reduce
+from operator import and_
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 class IndexView(View):
     def get(self, request, *args, **kwargs):
-        item_data = Item.objects.all()
+        item_data = Item.objects.order_by('-id')
+        paginator = Paginator(item_data, 8)
+        page = request.GET.get('page')
+        item_data = paginator.get_page(page)
+        try:
+            page_obj = paginator.page(page)
+        except PageNotAnInteger:
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            page_obj = paginator.page(paginator.num_pages)
+
         return render(request, 'app/index.html', {
-            'item_data': item_data
+            'item_data': item_data,
+            'page_obj': page_obj
         })
 
 class ItemDetailView(View):
@@ -141,3 +157,33 @@ class PaymentView(LoginRequiredMixin, View):
 class ThanksView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         return render(request, 'app/thanks.html')
+
+class SearchView(View):
+    def get(self, request, *args, **kwargs):
+        item_data = Item.objects.order_by('-id')
+        keyword = request.GET.get('keyword')
+
+        if keyword:
+            exclusion_list = set([' ',' '])
+            query_list = ''
+            for word in keyword:
+                if not word in exclusion_list:
+                    query_list += word
+            query = reduce(and_, [Q(title__icontains=q) | Q(title__icontains=q) for q in query_list])
+            item_data = item_data.filter(query)
+
+        paginator = Paginator(item_data, 8)
+        page = request.GET.get('page')
+        item_data = paginator.get_page(page)
+        try:
+            page_obj = paginator.page(page)
+        except PageNotAnInteger:
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            page_obj = paginator.page(paginator.num_pages)
+
+        return render(request, 'app/index.html', {
+            'keyword': keyword,
+            'item_data': item_data,
+            'page_obj': page_obj
+        })

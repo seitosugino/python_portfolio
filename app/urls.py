@@ -12,4 +12,5 @@ urlpatterns = [
     path('payment/', views.PaymentView.as_view(), name='payment'),
     path('thanks/', views.ThanksView.as_view(), name='thanks'),
     path('accounts/', include('accounts.urls')),
+    path('search', views.SearchView.as_view(), name='app_search'),
 ]

@@ -7,12 +7,23 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, query
 from functools import reduce
 from operator import and_
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 class IndexView(View):
     def get(self, request, *args, **kwargs):
         post_data = Post.objects.order_by('-id')
+        paginator = Paginator(post_data, 8)
+        page = request.GET.get('page')
+        post_data = paginator.get_page(page)
+        try:
+            page_obj = paginator.page(page)
+        except PageNotAnInteger:
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            page_obj = paginator.page(paginator.num_pages)
         return render(request, 'portfolio/index.html', {
-            'post_data': post_data
+            'post_data': post_data,
+            'page_obj': page_obj
         })
 
 class PostDetailView(View):
@@ -118,9 +129,20 @@ class SearchView(View):
             query = reduce(and_, [Q(title__icontains=q) | Q(content__icontains=q) for q in query_list])
             post_data = post_data.filter(query)
 
+        paginator = Paginator(post_data, 8)
+        page = request.GET.get('page')
+        post_data = paginator.get_page(page)
+        try:
+            page_obj = paginator.page(page)
+        except PageNotAnInteger:
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            page_obj = paginator.page(paginator.num_pages)
+
         return render(request, 'portfolio/index.html', {
             'keyword': keyword,
-            'post_data': post_data
+            'post_data': post_data,
+            'page_obj': page_obj
         })
 
 class AddressCreateView(View):
