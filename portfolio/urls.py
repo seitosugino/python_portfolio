@@ -12,5 +12,4 @@ urlpatterns = [
     path('search', views.SearchView.as_view(), name='search'),
     path('address/', views.AddressEditView.as_view(), name='address'),
     path('address/new', views.AddressCreateView.as_view(), name='address_create'),
-    path('app/', include('app.urls')),
 ]

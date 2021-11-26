@@ -270,3 +270,7 @@ a:hover {
     font-size: 20px;
     font-weight: bold;
 }
+
+.contact {
+    max-width: 500px;
+}
